@@ -14,12 +14,20 @@
  * limitations under the License.
  */
 
-#ifndef RECOVERY_INSTALL_H_
-#define RECOVERY_INSTALL_H_
+#ifndef MTDUTILS_MOUNTS_H_
+#define MTDUTILS_MOUNTS_H_
 
-#include "common.h"
+typedef struct MountedVolume MountedVolume;
 
-enum { INSTALL_SUCCESS, INSTALL_ERROR, INSTALL_CORRUPT, INSTALL_UPDATE_SCRIPT_MISSING, INSTALL_UPDATE_BINARY_MISSING };
-int install_package(const char *root_path);
+int scan_mounted_volumes(void);
 
-#endif  // RECOVERY_INSTALL_H_
+const MountedVolume *find_mounted_volume_by_device(const char *device);
+
+const MountedVolume *
+find_mounted_volume_by_mount_point(const char *mount_point);
+
+int unmount_mounted_volume(const MountedVolume *volume);
+
+int remount_read_only(const MountedVolume* volume);
+
+#endif  // MTDUTILS_MOUNTS_H_
